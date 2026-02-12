@@ -29,7 +29,7 @@ class UserBase(SQLModel):
 
 
 class UserCreate(UserBase):
-    password_plain_text: str
+    password: str
 
 
 class UserUpdate(SQLModel):
@@ -40,6 +40,7 @@ class UserUpdate(SQLModel):
 
 
 class UserPersistence(UserBase, table=True):
+    __tablename__ = "users"
     id: int | None = Field(default=None, primary_key=True)
     public_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     username: str = Field(unique=True, index=True)
@@ -58,6 +59,8 @@ class UserLogin(SQLModel):
     username: str
     password: str
 
+class LoginResponse(SQLModel):
+    access_token: str
 
 class UserPublic(UserBase):
     public_id: str

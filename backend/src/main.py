@@ -17,4 +17,5 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(user_routers)
 
 for route in app.routes:
-    print(route)
+    methods = ",".join(route.methods or [])
+    print(f"{methods:15} {route.path:30} {route.name}")
